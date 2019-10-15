@@ -1,0 +1,15 @@
+@startuml
+actor MainLoop
+
+package "Game" {
+  (Step) as UC0
+  (Figure) as UC1
+  UC0 .. UC1
+  UC1 .. (Translate)
+  UC1 .. (Rotate)
+
+  MainLoop -- (Init)
+}
+
+MainLoop -- UC0
+@enduml

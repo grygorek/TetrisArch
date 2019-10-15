@@ -1,0 +1,14 @@
+@startuml
+  [-> Screen : DropFigure(Blocks)
+  Screen -> Line : Insert(Blocks)
+  Line -> Block : Insert(Block)
+  Block -> Screen
+  |||
+  Screen -> Line : RemoveFull
+  Line -> Block : MakeGap
+  Block -> Screen
+  |||
+  Screen -> Line : MoveDown
+  Line -> Block : MoveDown
+  [<- Block
+@enduml

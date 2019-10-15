@@ -1,0 +1,23 @@
+@startuml
+  actor Player
+  actor MainLoop
+
+  create Translate
+    Player -> Translate : Create
+    Player -> Game : Input(Translate)
+    return
+    ...
+    MainLoop -> Game : Tick
+    activate Game
+      Game -> Figure : Translate[Left, Right, Down]
+      create TranslatedFigure
+        Figure -> TranslatedFigure : Create
+        Player -x Game : Input(Command)
+        TranslatedFigure -> Screen : CheckOverlap(TranslatedFigurePosition)
+        Screen -> Figure : Valid
+        Figure -> Figure : UpdatePosition(TranslatedFigure)
+        Figure -> MainLoop
+      destroy TranslatedFigure
+    destroy Translate
+  deactivate Game
+@enduml

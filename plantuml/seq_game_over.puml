@@ -1,0 +1,16 @@
+@startuml
+actor Timer
+
+Timer -> Game : OnTimer
+Game -> RandomFigureGenerator : NewFigure
+create Figure
+  RandomFigureGenerator -> Figure : Create
+
+  activate Figure
+  Figure -> Screen : CheckOverlap(FigurePosition)
+  Screen -> Timer : Failed
+destroy Figure
+
+...Game Over...
+
+@enduml

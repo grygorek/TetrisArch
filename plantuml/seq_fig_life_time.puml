@@ -1,0 +1,35 @@
+@startuml
+actor Timer
+actor MainLoop
+
+Timer -> Game : OnTimer
+Game -> RandomFigureGenerator : NewFigure
+create Figure
+  RandomFigureGenerator -> Figure : Create
+
+  Figure -> Screen : CheckOverlap(TranslatedFigurePosition)
+  Screen -> Figure : Valid
+  activate Figure
+  Figure -> Timer
+  ||||
+  ...number of ticks or commands later...
+  ||80||
+
+  Timer -> Game : OnTimer
+  create TranslateDown
+    Game -> TranslateDown : Create
+    Game -> Game : Input(Translate)
+    Game -> Timer
+    ...
+    MainLoop -> Game : Tick
+    Game -> Figure : Translate(Down)
+    create TranslatedFigure
+      Figure -> TranslatedFigure : Create
+      TranslatedFigure -> Screen : CheckOverlap(TranslatedFigurePosition)
+      Figure <- Screen: Failed
+      Figure -> Screen : DropFigure
+      Screen -> MainLoop
+    destroy TranslatedFigure
+  destroy TranslateDown
+destroy Figure
+@enduml

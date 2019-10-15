@@ -1,0 +1,29 @@
+@startuml
+actor MainLoop
+
+create Game
+MainLoop -> Game : Create(Dimentions)
+create Screen
+Game -> Screen : Create(Dimentions)
+create Line
+Screen -> Line : Create(Length)
+create Block
+Line -> Block : Create
+Block -> Game
+
+||80||
+
+Game -> RandomFigureGenerator : NewFigure
+
+create Figure
+RandomFigureGenerator -> Figure : Create(Position)
+Figure -> Screen : CheckOverlap(Position)
+Screen -> Figure : Valid
+Figure -> Game
+
+||80||
+create Timer
+MainLoop -> Timer : Create(Game::OnTimer)
+return
+
+@enduml

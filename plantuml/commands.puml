@@ -1,0 +1,9 @@
+@startuml
+Command   <|-- Rotate
+Command   <|-- Translate
+Rotate    <|-- RotateLeft
+Rotate    <|-- RotateRight
+Translate <|-- TranslateLeft
+Translate <|-- TranslateRight
+Translate <|-- TranslateDown
+@enduml

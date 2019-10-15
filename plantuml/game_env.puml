@@ -1,0 +1,29 @@
+@startuml
+
+Block <|-- EmptyBlock
+
+Player - Game : play >
+
+Game *-- Input
+Game *-- Screen
+Game *-- Figure
+
+class Game {
+  Reset() : void
+  OnTimer() : void
+  Tick() : void
+  Input(Command) : void
+  RandomFigureGenerator() : Figure
+}
+
+
+class Screen {
+  Reset() : void
+}
+
+class Figure {
+  Rotate(Rotate) : void
+  Translate(Translate) : void
+}
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+
+Timer "1" -- "1" Game : progress >
+
+Game "1" - "1" Player : controls <
+(Game, Player) . Command
+Game "1" -- "1" Figure : to move >
+
+Figure - Dimentions : within >
+Figure "*" - "1" Screen : > is on
+Screen -up- Dimentions : has >
+
+
+Figure "1" o-- "1..*" Block : made of >
+Block "0..*" --o "1..*" Line : < made of
+Block o-down- Position : > has
+Block - Block : > no overlap
+Line "1..*" -down- "0..*" EmptyBlock : has >
+
+Line <|-- FullLine
+FullLine - Screen : removed from >
+Screen "1" *-- "*" Line : has >
+EmptyBlock - FullLine : < has no
+Block - EmptyBlock : fits in >
+
+@enduml

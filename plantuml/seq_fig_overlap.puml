@@ -1,0 +1,7 @@
+@startuml
+  [-> Screen : CheckOverlap(FigurePosition)
+  Screen -> Dimentions : CheckOverlap
+  Screen -> Line : CheckOverlap
+  Line -> Block : CheckOverlap
+  [<- Block : [Valid, Failed]
+@enduml
