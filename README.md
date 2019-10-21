@@ -67,7 +67,8 @@ Blocks cannot overlap. So, the game is over when it is impossible to place a new
 | Requirement | Description |
 |-----|-------------|
 | <a id="REQ_SinglePlayer">REQ_SinglePlayer</a> | There is a single player |
-| <a id="REQ_Cmd">REQ_Cmd</a>| Player can enter single control command at one time. Commands are: Translate Left, Translate Right, Translate Down, Rotate Left, Rotate Right.
+| <a id="REQ_Cmd">REQ_Cmd</a>| Commands are: Translate Left, Translate Right, Translate Down, Rotate Left, Rotate Right.
+| <a id="REQ_NoPendingCommands">REQ_NoPendingCommands</a> | Commands are not buffered. New command overwrites the previews one if that one has not be executed yet
 | <a id="REQ_LineOfBlocks">REQ_LineOfBlocks</a> | Single line is made of blocks.
 | <a id="REQ_LineFull">REQ_LineFull</a> | Line that has no empty spaces, that is, when is made of blocks, is removed from the screen.
 | <a id="REQ_ScreenSize">REQ_ScreenSize</a> | Screen has fixed dimentions of 10 rows and 8 columns. Screen is made of lines.
@@ -76,7 +77,6 @@ Blocks cannot overlap. So, the game is over when it is impossible to place a new
 | <a id="REQ_MoveLimit">REQ_MoveLimit</a> | Figure must not be placed outside borders of the screen. That is, figure cannot move left when is at the left border. Figure cannot move right when is at the right border. Figure cannot move down when is at the bottom of the screen.
 | <a id="REQ_FigureLifeTime">REQ_FigureLifeTime</a> | Player looses a control of a figure that cannot advance down (is at the bottom of the screen). New figure is generated at the top of the screen.
 | <a id="REQ_BlocksNotOverlap">REQ_BlocksNotOverlap</a> | Single block takes space. Figures are made of blocks. Two blocks cannot take the same space. This implicates that figures cannot overlap. This also implicates that the figures cannot move (translate or rotate) when the new position would overlap with any block of a line.
-| <a id="REQ_NoPendingCommands">REQ_NoPendingCommands</a> | Commands are not buffered. New command overwrites the previews one if that one has not be executed yet
 | <a id="REQ_OnTimerCommand">REQ_OnTimerCommand</a> | Translate Down command will be generated after 1 second if player does not input any command in that period. 
 
 
@@ -113,11 +113,17 @@ Player and timer trigger state changes. All state control happens in the main lo
 
 ### Time Progress
 
+Requirements: [REQ_OnTimerCommand](#REQ_OnTimerCommand)
+
 Timer event moves a figure only down. No rotation or shifting left or right.
 
 ![Time Progress](http://www.plantuml.com/plantuml/png/5Son3G8n30NGdYbWWRYdEdQWHo5d9HQ94zdVGcpFNVMwjpco8KQ_t4HBZvsl3LX-9xByJLNGuXtELgQ25QdCGTL-THf_wCamyOULHg82MZthcH5ay6lPhCRkQPt_nheV_W40)
 
 ### Player Generates Input
+
+Requirements: [REQ_SinglePlayer](#REQ_SinglePlayer)
+
+There is a single input. Input represents a player.
 
 ![Player Generates Input](http://www.plantuml.com/plantuml/png/5Oqn3iCW34NtdgAz0DuxfNVe7b5YWLLYaFbMnUqRflUczxQ1QF2ptXwYgVh1zmBqyIIo-0jPKFpZWoqr1Ij2QYTbcxaPV-dDC1alIuL41THhr1LRCjdspBgBTaVeQx6n7XV_)
 
@@ -135,11 +141,15 @@ Timer event moves a figure only down. No rotation or shifting left or right.
 
 ### Commands
 
+Requirements: [REQ_Cmd](#REQ_Cmd)
+
 ![Commands](http://www.plantuml.com/plantuml/png/5Sn13W8X34RXlQVG2z2zg_4ENW2XWKOefFs9yVOphDxcvJiSqR1wkpr4KrkPxnMO_YIo-0j5KDTdELiQ2bQ4D3eL-vTX_AKtmyHVbYg92cYsg1kZw-fHiuUvwOCrNpq1)
 
 
 
 ### Game Figures
+
+Requirements: [REQ_FiguresType](#REQ_FiguresType)
 
 ![Game Figures](http://www.plantuml.com/plantuml/png/5Sp14G8X30NGkrLe0-JkQUt11f2Da94DJF8pZjsxdDxjROviYADVRgAbnyxN1ao_4rd-fYfeyGfdAqF1YbJ6GTL-THX_wCamyOULHg82cZthokWjDOmzpJLlhFlf7m00)
 
@@ -165,6 +175,8 @@ Restarting a game is to clear the screen and create a figure.
 
 ### Successful Figure Rotation
 
+Requirements: [REQ_NoPendingCommands](#REQ_NoPendingCommands), [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit)
+
 Figure rotation succeeds when the figure does not overlap any blocks after a rotation. Any new command arriving during that process is dropped.
 
 ![Figure Rotation Success](http://www.plantuml.com/plantuml/png/5Ssn4S8m34RXdYbWWQYd2ZlG-umYR1sERAJVnx4zf7hT-zP0TiozdIvgtEOcvmgCk19v_Yn5KUTZXZXtWnWMxZiL_vRkygAxm3LkpfNK53HQjcD68U_qr9Ay8yLabeXb7Cegjltx0m00)
@@ -172,12 +184,16 @@ Figure rotation succeeds when the figure does not overlap any blocks after a rot
 
 ### Failed Figure Rotation
 
+Requirements: [REQ_NoPendingCommands](#REQ_NoPendingCommands), [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit)
+
 Figure rotation fails when the figure overlaps other blocks after a rotation. Any new command arriving during that process is dropped.
 
 ![Figure Rotation Failed](http://www.plantuml.com/plantuml/png/5SqniW8X38Vn_ftYUG7IMwrti6SGif2H3PZy6SVRwrPVz_qsHpAie_zTH7DVXVyRCFrAPEaTgg2jntAsF1Ii27aSLErJX_6JxWmJlrbk92gWsPEUCt9-nLrgj86u9-bSmZoHZRNy-WK0)
 
 
 ### Successful Figure Translation
+
+Requirements: [REQ_NoPendingCommands](#REQ_NoPendingCommands), [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit)
 
 Figure translation succeeds when the figure does not overlap any blocks after a translation. Any new command arriving during that process is dropped.
 
@@ -188,12 +204,16 @@ Figure translation succeeds when the figure does not overlap any blocks after a 
 
 ### Failed Figure Translation
 
+Requirements: [REQ_NoPendingCommands](#REQ_NoPendingCommands), [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit)
+
 Figure translation fails when the figure overlaps other blocks after a translation. Any new command arriving during that process is dropped.
 
 ![Figure Translation Failure](http://www.plantuml.com/plantuml/png/5Sqnai8m34RXVa-nN23ggS8Tw3t2KMmDZcoatyDmUqZrklUj0NRCe_rTr7ARc_nNOCILoFcz54MTZndYkHl4iEH-KF5FwIvFkWjSu-Qvafg2HcCxPnJoIhkM16UBnf2qixPbdD0gjltw1G00)
 
 
 ### Move Down On Timer Tick Event
+
+Requirements: [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_OnTimerCommand](#REQ_OnTimerCommand), [REQ_MoveLimit](#REQ_MoveLimit)
 
 Time advances the figure down after a timeout. It is a regular translation process. 
 
@@ -204,6 +224,8 @@ Time advances the figure down after a timeout. It is a regular translation proce
 
 ### Figure Life Time
 
+Requirements: [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit), [REQ_BlocksDrop](#REQ_BlocksDrop)
+
 A new figure is created and will live until it cannot move down anymore. If it can move, either user can request the figure to move or timer tick can move it down.
 
 ![Figure Life Time](http://www.plantuml.com/plantuml/png/5SqniW8X38Vn_ftYUG7IMwrti6UGpK9629Zy6SVRwrPVz_qsHpAitlukehcjdVyhCFrAPEaTYg2kntAsF1Ii27bqAlOfm_X9TuQ9tonN4XNGR4dF6Jc_uY4bDZauGZg7UHeRw_xh5m00)
@@ -211,6 +233,8 @@ A new figure is created and will live until it cannot move down anymore. If it c
 
 
 ### Checking Figure Overlap
+
+Requirements: [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit)
 
 A figure cannot move beyond the screen's dimentions and it cannot overlap with blocks already on the screen.
 
@@ -220,6 +244,8 @@ A figure cannot move beyond the screen's dimentions and it cannot overlap with b
 
 ### Dropping Figure
 
+Requirements: [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap), [REQ_MoveLimit](#REQ_MoveLimit), [REQ_BlocksDrop](#REQ_BlocksDrop)
+
 This is a use case when a figure cannot move down anymore. Its blocks are taken to fill empty gaps. In a case when a line does not have gaps (line is full), the line will be removed and all lines above are moved down. It is recursive operation from the most bottom line to the most top.
 
 ![Drop Figure](http://www.plantuml.com/plantuml/png/5Smn4W8X30NGtbFe1KXljTx1VWSXGaOsOF8PnzihrUlUveY6URJJHJIrcVbSWU5N8ekVK0HrFgQpfQvWHKZze6BVqerVT6UO-CrI9L41ZHPrPUJytfzIzcnzXB7wZJN__G40)
@@ -228,6 +254,7 @@ This is a use case when a figure cannot move down anymore. Its blocks are taken 
 
 
 ### Game Over
+Requirements: [REQ_BlocksNotOverlap](#REQ_BlocksNotOverlap)
 
 Game is over when a new figure cannot be created. This will be a case when checking overlap sequence returns error.
 
