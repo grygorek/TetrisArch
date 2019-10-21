@@ -149,11 +149,15 @@ Timer event moves a figure only down. No rotation or shifting left or right.
 
 ### Start Program
 
+Creating a game means to create screen, generate a random figure and start the timer.
+
 ![Start Seqence Diagram](http://www.plantuml.com/plantuml/png/7Smn3i8m30NGdLF01UATgTo17ONKIYnI9zZVGjmUskbjRt5aGspzT14jFLO-Ds3wbSZo9rL1YsSuMnaALgGoDghshSFuHNU6YT-iD18LqEnPzuoStuzZJdE_5zRrxmy0)
 
 
 
 ### Restart Game
+
+Restarting a game is to clear the screen and create a figure.
 
 ![Restart Sequence Diagram](http://www.plantuml.com/plantuml/png/7Smn3i8m30NGdLF01UATgTo17ONKIYnI9zZVGjmUskbjRt5aGspzT14jFLO-Ds3wbSZo9rL1YsSuMnaALgGoDghshSFuHNU6YT-iD18LqEnPzuoStm_ZuqvptnVMzUyF)
 
@@ -161,15 +165,21 @@ Timer event moves a figure only down. No rotation or shifting left or right.
 
 ### Successful Figure Rotation
 
+Figure rotation succeeds when the figure does not overlap any blocks after a rotation. Any new command arriving during that process is dropped.
+
 ![Figure Rotation Success](http://www.plantuml.com/plantuml/png/5Ssn4S8m34RXdYbWWQYd2ZlG-umYR1sERAJVnx4zf7hT-zP0TiozdIvgtEOcvmgCk19v_Yn5KUTZXZXtWnWMxZiL_vRkygAxm3LkpfNK53HQjcD68U_qr9Ay8yLabeXb7Cegjltx0m00)
 
 
 ### Failed Figure Rotation
 
+Figure rotation fails when the figure overlaps other blocks after a rotation. Any new command arriving during that process is dropped.
+
 ![Figure Rotation Failed](http://www.plantuml.com/plantuml/png/5SqniW8X38Vn_ftYUG7IMwrti6SGif2H3PZy6SVRwrPVz_qsHpAie_zTH7DVXVyRCFrAPEaTgg2jntAsF1Ii27aSLErJX_6JxWmJlrbk92gWsPEUCt9-nLrgj86u9-bSmZoHZRNy-WK0)
 
 
 ### Successful Figure Translation
+
+Figure translation succeeds when the figure does not overlap any blocks after a translation. Any new command arriving during that process is dropped.
 
 ![Figure Translation Success](http://www.plantuml.com/plantuml/png/5Ssn4S8m34RXdYbWWQYd2ZlG-umYR1sERAJVnx4zf7hT-zP0TiozdIvgtEOcvmgCk19v_Yn5KUTZXZXtWnWMxZiL_vRkygAxm3LkpfNK53HQjcD68U_qr9BWsQ9bI8h9B17BEAnLRFlt1m00)
 
@@ -178,11 +188,14 @@ Timer event moves a figure only down. No rotation or shifting left or right.
 
 ### Failed Figure Translation
 
+Figure translation fails when the figure overlaps other blocks after a translation. Any new command arriving during that process is dropped.
+
 ![Figure Translation Failure](http://www.plantuml.com/plantuml/png/5Sqnai8m34RXVa-nN23ggS8Tw3t2KMmDZcoatyDmUqZrklUj0NRCe_rTr7ARc_nNOCILoFcz54MTZndYkHl4iEH-KF5FwIvFkWjSu-Qvafg2HcCxPnJoIhkM16UBnf2qixPbdD0gjltw1G00)
 
 
 ### Move Down On Timer Tick Event
 
+Time advances the figure down after a timeout. It is a regular translation process. 
 
 ![On Timer Move Down](http://www.plantuml.com/plantuml/png/5Oqn4a8X30LxJw4N-EcjldUmPv2VWOmGC7deU7kbscftTqSqp5PF5z5Kvy7d0Wo_4bdyR5bGvcCwM-eALcofDyhspTtuINU6YTyi5H8LqAXHLuoSNw5hW3IsmEybZZNPMOy_Vm00)
 
