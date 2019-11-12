@@ -1,0 +1,9 @@
+@startuml
+actor Player
+Player -> Game : Reset
+Game -> Screen : Reset
+Screen -> Line : Reset
+Line -> Game
+Game -> Figure ** : Create
+Figure -> Player
+@enduml

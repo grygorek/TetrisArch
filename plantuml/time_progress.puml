@@ -1,0 +1,12 @@
+@startuml
+  actor Timer
+
+  package "Game" {
+    (Timer Event) as UC
+    UC ..(Translate Figure Down)
+  }
+
+  Timer -- UC 
+
+
+@enduml

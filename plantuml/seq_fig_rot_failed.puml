@@ -1,0 +1,21 @@
+@startuml
+  actor Player
+  actor MainLoop
+  
+  create Rotate 
+  Player -> Rotate : Create
+  Player -> Game : Input(Rotate)
+  return 
+  ...
+  MainLoop -> Game : Tick
+  activate Game
+      Game -> Figure : Rotate[Left, Right]
+      create RotatedFigure
+        Figure -> RotatedFigure : Create
+        Player -x Game : Input(Command)
+        RotatedFigure -> Screen : CheckOverlap(RotatedFigurePosition)
+        Screen -> MainLoop : Failed
+      destroy RotatedFigure
+    destroy Rotate 
+  deactivate Game
+@enduml

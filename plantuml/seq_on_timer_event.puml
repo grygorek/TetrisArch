@@ -1,0 +1,23 @@
+@startuml
+  actor Timer
+  actor MainLoop
+
+  Timer -> Game : OnTimer
+  create TranslateDown
+    Game -> TranslateDown : Create
+    Game -> Game : Input(TranslateDown)
+    Game -> Timer
+    ...
+    MainLoop -> Game : Tick
+    activate Game
+      Game -> Figure : Translate[Down]
+      create TranslatedFigure
+        Figure -> TranslatedFigure : Create
+        TranslatedFigure -> Screen : CheckOverlap(TranslatedFigurePosition)
+        Screen -> Figure : Valid
+        Figure -> Figure : UpdatePosition(TranslatedFigure)
+        Figure -> MainLoop
+      destroy TranslatedFigure
+    destroy TranslateDown
+  deactivate Game
+@enduml

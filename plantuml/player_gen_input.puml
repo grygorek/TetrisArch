@@ -1,0 +1,19 @@
+@startuml
+  actor Player
+
+  package "Game" {
+    (Input) as UC0
+    (Figure) as UC1
+    UC0 .. UC1
+    UC1 ..(Translate Down)
+    UC1 ..(Translate Left)
+    UC1 ..(Translate Right)
+    UC1 ..(Rotate Right)
+    UC1 ..(Rotate Left)
+    Player -- (Restart)
+  }
+
+  Player -- UC0 : <generate>
+
+
+@enduml

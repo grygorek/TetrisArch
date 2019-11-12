@@ -1,0 +1,6 @@
+@startuml
+Figure <|-- Square
+Figure <|-- BigSquare
+Figure <|-- Bar
+Figure <|-- BarT
+@enduml
